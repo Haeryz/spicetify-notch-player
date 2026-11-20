@@ -12,14 +12,20 @@ Turns your MacBook's **physical notch** into a Dynamic-Island style Spotify play
 
 Hover the notch to expand it:
 
-- **Live synced lyrics.** The current line scrolls in as the song plays.
+- **Live synced lyrics.** The previous, current and next lines roll by as the song plays.
 - Album art, title, artist and album. Click any of them to open that page in Spotify.
-- Accent colour and glow taken from the album art
+- Ambient glow, accent colour and tint taken from the album art
 - Seek bar you can drag to scrub, with elapsed and remaining time
 - Like, shuffle, previous, play/pause, next and repeat (off, all, one)
-- Volume slider
+- Volume bar
 - **Up next** from your queue, and the **active Spotify Connect device**
-- Expands for a few seconds when the song changes
+- Long titles scroll instead of being cut off
+
+In the collapsed notch:
+
+- **A real audio visualizer.** The app listens to Spotify's own audio output and shows bass, low-mid, high-mid and treble. It's timed to what you hear, including the delay of Bluetooth headphones. This needs macOS 14.2 or later and the *System Audio Recording* permission. Nothing is recorded or stored. Without it, the bars follow Spotify's beat data.
+- A thin progress ring around the album art
+- When the song changes, the title and artist slide in briefly. The player doesn't open on its own.
 
 ## How it works
 

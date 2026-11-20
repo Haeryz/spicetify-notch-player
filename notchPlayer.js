@@ -1,7 +1,7 @@
 // NAME: Notch Player
 // AUTHOR: Haeryz
 // DESCRIPTION: Dynamic-Island player in the MacBook notch (with the companion app) or inside the Spotify window.
-// VERSION: 2.0.0
+// VERSION: 2.1.0
 
 
 (function NotchPlayer() {
