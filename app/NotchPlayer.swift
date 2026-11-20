@@ -44,14 +44,12 @@ final class NotchModel: ObservableObject {
     @Published var artwork: NSImage? = nil
     @Published var nextArtwork: NSImage? = nil
     @Published var accent: Color = Color(red: 0.12, green: 0.84, blue: 0.38)
-    @Published var peeking = false
     @Published var seekDrag: Double? = nil
     @Published var seekHover = false
 
     var send: (([String: Any]) -> Void)?
     private var artURL: String?
     private var nextArtURL: String?
-    private var peekWork: DispatchWorkItem?
 
     var hasTrack: Bool { connected && !state.title.isEmpty }
 
@@ -62,22 +60,12 @@ final class NotchModel: ObservableObject {
     }
 
     func apply(_ s: PlayerState) {
-        let songChanged = s.uri != state.uri && !state.uri.isEmpty
         state = s
         if s.art != artURL { artURL = s.art; load(s.art) { [weak self] img in
             self?.artwork = img
             if let img { self?.accent = Self.accent(of: img) }
         } }
         if s.next?.art != nextArtURL { nextArtURL = s.next?.art; load(s.next?.art) { [weak self] in self?.nextArtwork = $0 } }
-        if songChanged { peek() }
-    }
-
-    func peek() {
-        peekWork?.cancel()
-        peeking = true
-        let w = DispatchWorkItem { [weak self] in self?.peeking = false }
-        peekWork = w
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.5, execute: w)
     }
 
     func command(_ cmd: String, _ extra: [String: Any] = [:]) {
@@ -436,7 +424,7 @@ struct NotchRoot: View {
     @ObservedObject var m: NotchModel
     let geo: NotchGeometry
 
-    var open: Bool { m.hasTrack && (m.expanded || m.peeking) }
+    var open: Bool { m.hasTrack && m.expanded }
     var wing: CGFloat { geo.height + 6 }
 
     var size: CGSize {
@@ -573,7 +561,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// The rect (screen coords) the island currently occupies.
     func activeRect() -> NSRect {
         let f = screen.frame
-        let open = model.expanded || model.peeking
+        let open = model.expanded
         let w: CGFloat, h: CGFloat
         if model.hasTrack && open { w = kExpandedW; h = geo.height + kExpandedBody + 30 }
         else if model.hasTrack { w = geo.width + (geo.height + 6) * 2 + kEar * 2; h = geo.height }

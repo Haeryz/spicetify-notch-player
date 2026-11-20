@@ -16,7 +16,7 @@
   const DEFAULTS = {
     enabled: true,
     position: "center", // center | left | right
-    peekOnChange: true, // expand briefly when the song changes
+    expandOnSongChange: false, // opt-in: expand briefly when the song changes
     showVisualizer: true,
     showUpNext: true,
     tintFromArt: true,
@@ -25,6 +25,7 @@
   let cfg = { ...DEFAULTS };
   try {
     cfg = { ...DEFAULTS, ...JSON.parse(S.LocalStorage.get(KEY) || "{}") };
+    delete cfg.peekOnChange; // legacy key (defaulted on); replaced by opt-in expandOnSongChange
   } catch (_) {}
   const save = () => S.LocalStorage.set(KEY, JSON.stringify(cfg));
 
@@ -383,7 +384,7 @@
     if (!dragging) setOpen(false);
   });
   function peek() {
-    if (!cfg.peekOnChange || hovering) return;
+    if (!cfg.expandOnSongChange || hovering) return;
     setOpen(true);
     clearTimeout(peekTimer);
     peekTimer = setTimeout(() => !hovering && setOpen(false), 3500);
@@ -520,7 +521,7 @@
       applySettings();
     };
     row("Position", sel);
-    toggle("peekOnChange", "Expand briefly on song change");
+    toggle("expandOnSongChange", "Expand briefly on song change");
     toggle("showVisualizer", "Show visualizer bars");
     toggle("showUpNext", "Show 'Up next'");
     toggle("tintFromArt", "Tint accent from album art");
