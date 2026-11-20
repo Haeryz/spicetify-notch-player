@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="420" viewBox="0 0 900 420" font-family="-apple-system, Helvetica Neue, Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1b2a22"/><stop offset="1" stop-color="#0d0d12"/>
+    </linearGradient>
+    <linearGradient id="art" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff7a59"/><stop offset=".5" stop-color="#c13584"/><stop offset="1" stop-color="#4b2bd6"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+  <rect width="900" height="420" fill="url(#bg)"/>
+  <!-- compact pill -->
+  <rect x="340" y="22" width="220" height="36" rx="18" fill="#000"/>
+  <rect x="346" y="28" width="24" height="24" rx="7" fill="url(#art)"/>
+  <text x="378" y="45" fill="#fff" font-size="12" font-weight="600">Midnight Drive — Neon C…</text>
+  <g fill="#e0567f"><rect x="528" y="36" width="3" height="10" rx="1.5"/><rect x="533" y="31" width="3" height="18" rx="1.5"/><rect x="538" y="34" width="3" height="13" rx="1.5"/><rect x="543" y="29" width="3" height="20" rx="1.5"/><rect x="548" y="35" width="3" height="11" rx="1.5"/></g>
+  <text x="450" y="80" fill="#8a8a95" font-size="12" text-anchor="middle">compact · hover to expand ↓</text>
+  <!-- expanded island -->
+  <rect x="250" y="110" width="400" height="212" rx="32" fill="#e0567f" opacity=".35" filter="url(#glow)"/>
+  <rect x="250" y="110" width="400" height="212" rx="32" fill="#000"/>
+  <rect x="268" y="126" width="64" height="64" rx="14" fill="url(#art)"/>
+  <text x="346" y="148" fill="#fff" font-size="15" font-weight="700">Midnight Drive</text>
+  <text x="346" y="166" fill="#a6a6a6" font-size="12.5">Neon Coast</text>
+  <text x="346" y="183" fill="#737373" font-size="11.5">Afterglow (Deluxe)</text>
+  <g fill="#e0567f"><rect x="602" y="138" width="3" height="10" rx="1.5"/><rect x="607" y="132" width="3" height="16" rx="1.5"/><rect x="612" y="135" width="3" height="13" rx="1.5"/><rect x="617" y="130" width="3" height="18" rx="1.5"/><rect x="622" y="137" width="3" height="11" rx="1.5"/></g>
+  <text x="632" y="174" fill="#8c8c8c" font-size="10" text-anchor="end">MacBook Pro</text>
+  <text x="268" y="215" fill="#999" font-size="10.5">1:42</text>
+  <rect x="298" y="209" width="300" height="5" rx="2.5" fill="#2e2e2e"/>
+  <rect x="298" y="209" width="128" height="5" rx="2.5" fill="#fff"/>
+  <text x="632" y="215" fill="#999" font-size="10.5" text-anchor="end">3:58</text>
+  <g fill="#fff">
+    <path transform="translate(276,234) scale(.75)" fill="#e0567f" d="M12 20.5l-1.4-1.3C5.4 14.5 2 11.4 2 7.6 2 4.5 4.4 2 7.5 2c1.7 0 3.4.8 4.5 2.1C13.1 2.8 14.8 2 16.5 2 19.6 2 22 4.5 22 7.6c0 3.8-3.4 6.9-8.6 11.6z"/>
+    <path transform="translate(320,234) scale(.75)" fill="#e0567f" d="M17 3l4 4-4 4V8h-2.2l-3.1 4 3.1 4H17v-3l4 4-4 4v-3h-3.2l-3.6-4.6L6.6 18H3v-2h2.6l3.1-4-3.1-4H3V6h3.6l3.6 4.6L13.8 6H17z"/>
+    <path transform="translate(362,234) scale(.75)" d="M19 5.5v13a1 1 0 0 1-1.55.83L9 13.6V18a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v4.4l8.45-5.73A1 1 0 0 1 19 5.5zM4.5 5H6v14H4.5z"/>
+    <path transform="translate(400,228)" d="M6 4h4v16H6zM14 4h4v16h-4z"/>
+    <path transform="translate(444,234) scale(.75)" d="M5 5.5v13a1 1 0 0 0 1.55.83L15 13.6V18a1 1 0 0 0 2 0V6a1 1 0 0 0-2 0v4.4L6.55 4.67A1 1 0 0 0 5 5.5zM18 5h1.5v14H18z"/>
+    <path transform="translate(486,234) scale(.75)" opacity=".4" d="M7 7h10v3l4-4-4-4v3H5v6h2zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2z"/>
+    <path transform="translate(524,234) scale(.7)" d="M3 9v6h4l5 5V4L7 9zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/>
+  </g>
+  <rect x="548" y="241" width="70" height="4" rx="2" fill="#2e2e2e"/><rect x="548" y="241" width="48" height="4" rx="2" fill="#e0567f"/>
+  <circle cx="596" cy="243" r="6" fill="#e0567f"/>
+  <line x1="268" y1="272" x2="632" y2="272" stroke="#1f1f1f"/>
+  <rect x="268" y="282" width="20" height="20" rx="5" fill="#3b6fd6"/>
+  <text x="296" y="296" fill="#808080" font-size="11">Up next · <tspan fill="#ccc" font-weight="600">Glass Houses</tspan> · Lumen</text>
+  <text x="450" y="370" fill="#fff" font-size="22" font-weight="700" text-anchor="middle">Notch Player</text>
+  <text x="450" y="396" fill="#8a8a95" font-size="13" text-anchor="middle">Dynamic-Island style player · album-tinted · seek · like · shuffle · repeat · volume · up next · device</text>
+</svg>
