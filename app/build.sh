@@ -23,6 +23,7 @@ cat > "$APP/Contents/Info.plist" <<PLIST
   <key>LSMinimumSystemVersion</key><string>13.0</string>
   <key>LSUIElement</key><true/>
   <key>NSHighResolutionCapable</key><true/>
+  <key>NSAudioCaptureUsageDescription</key><string>Notch Player listens to Spotify's audio output to drive the visualizer. Nothing is recorded or stored.</string>
 </dict></plist>
 PLIST
 codesign --force --deep -s - "$APP"
