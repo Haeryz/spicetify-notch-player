@@ -1,12 +1,18 @@
-# Notch Player
+# Notch Player: Dynamic Island for Spotify on Mac
 
-Turns your MacBook's **physical notch** into a Dynamic-Island style Spotify player. It sits flush with the notch, appears above every app, and is fast because it's native SwiftUI.
+[![Latest release](https://img.shields.io/github/v/release/Haeryz/spicetify-notch-player)](../../releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/Haeryz/spicetify-notch-player/total)](../../releases)
+![macOS 13+](https://img.shields.io/badge/macOS-13%2B-black?logo=apple)
+![Spicetify extension](https://img.shields.io/badge/Spicetify-extension-1ed760?logo=spotify&logoColor=white)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-![expanded](preview.png)
+**Notch Player turns your MacBook's notch into an iPhone-style Dynamic Island for Spotify.** It's a now-playing mini player with live synced lyrics, a real audio visualizer and full playback controls. It sits flush with the physical notch and appears above every app. It's a native SwiftUI app paired with a [Spicetify](https://spicetify.app) extension, and it's free and open source.
 
-**Collapsed:** the album art and a live visualizer sit on either side of the notch.
+![Notch Player expanded under the MacBook notch: album art, track title, synced lyrics, seek bar, playback controls and up next](preview.png)
 
-![collapsed](preview-collapsed.png)
+**Collapsed:** the album art (with a progress ring) and a live audio visualizer sit on either side of the notch.
+
+![Notch Player collapsed beside the MacBook notch: album art on the left, audio visualizer bars on the right](preview-collapsed.png)
 
 ## Features
 

@@ -1,6 +1,6 @@
 {
-  "name": "Notch Player",
-  "description": "Turns your MacBook's physical notch into a Dynamic-Island music player: live synced lyrics, album-tinted glow, seek, like, shuffle, repeat, volume, up next and device. Needs the free companion app (see README); without it, a pill appears inside the Spotify window.",
+  "name": "Notch Player – Dynamic Island for Spotify",
+  "description": "Dynamic Island for Spotify on your MacBook notch: a now-playing mini player with live synced lyrics, a real audio visualizer, album-art glow, seek, like, shuffle, repeat, volume, up next and device. Pairs with the free native macOS app (see README); without it, a pill appears inside the Spotify window.",
   "preview": "preview.png",
   "main": "notchPlayer.js",
   "readme": "README.md",
@@ -11,11 +11,16 @@
     }
   ],
   "tags": [
-    "player",
-    "notch",
-    "macos",
     "dynamic island",
+    "notch",
+    "macbook",
+    "macos",
+    "now playing",
+    "mini player",
     "lyrics",
-    "now playing"
+    "synced lyrics",
+    "visualizer",
+    "player",
+    "controls"
   ]
 }
