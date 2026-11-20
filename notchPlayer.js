@@ -1,7 +1,7 @@
 // NAME: Notch Player
 // AUTHOR: Haeryz
-// DESCRIPTION: A Dynamic-Island style notch player for Spotify. Hover the pill at the top of the window to expand it.
-// VERSION: 1.0.0
+// DESCRIPTION: Dynamic-Island player in the MacBook notch (with the companion app) or inside the Spotify window.
+// VERSION: 2.0.0
 
 
 (function NotchPlayer() {
@@ -307,7 +307,7 @@
   }
 
   function renderProgress() {
-    if (dragging) return;
+    if (dragging || bridged) return;
     const p = safe(() => S.Player.getProgress(), 0);
     const d = safe(() => S.Player.getDuration(), 0);
     el.cur.textContent = fmt(p);
@@ -368,6 +368,7 @@
 
   /* ---------------------------------------------------------------- open / close */
   let hovering = false;
+  let bridged = false;
   let peekTimer = null;
   const setOpen = (o) => root.classList.toggle("np-open", o);
   root.addEventListener("mouseenter", () => {
@@ -539,6 +540,132 @@
       });
     } catch (_) {}
   }
+
+  /* ---------------------------------------------------------------- native notch bridge
+   * The companion "Notch Player" macOS app draws the player inside the physical notch,
+   * on top of every app. It listens on ws://127.0.0.1:47823; we stream state to it and
+   * run the commands it sends back. While it's connected the in-window pill is hidden. */
+  const BRIDGE_URL = "ws://127.0.0.1:47823";
+  let ws = null;
+  let lyricsFor = "";
+  let lyrics = null;
+
+  async function fetchLyrics(uri) {
+    lyricsFor = uri;
+    lyrics = null;
+    const id = uri?.split(":")[2];
+    if (!id || !uri.startsWith("spotify:track:")) return;
+    try {
+      const r = await S.CosmosAsync.get(
+        `https://spclient.wg.spotify.com/color-lyrics/v2/track/${id}?format=json&vocalRemoval=false&market=from_token`
+      );
+      if (lyricsFor !== uri) return;
+      const l = r?.lyrics;
+      if (l?.syncType === "LINE_SYNCED" && Array.isArray(l.lines)) {
+        lyrics = l.lines.map((x) => ({ t: +x.startTimeMs || 0, w: x.words || "" }));
+        pushState();
+      }
+    } catch (_) {}
+  }
+
+  function snapshot() {
+    const item = S.Player.data?.item;
+    if (!item) return null;
+    const m = item.metadata || {};
+    const nt = safe(() => S.Queue?.nextTracks?.[0]?.contextTrack?.metadata, null);
+    return {
+      uri: item.uri || "",
+      title: m.title || item.name || "",
+      artist: m.artist_name || (item.artists || []).map((a) => a.name).join(", ") || "",
+      album: m.album_title || item.album?.name || "",
+      art: img(m.image_xlarge_url || m.image_large_url || m.image_url || item.album?.images?.[0]?.url) || null,
+      albumUri: m.album_uri || item.album?.uri || null,
+      artistUri: m.artist_uri || item.artists?.[0]?.uri || null,
+      duration: safe(() => S.Player.getDuration(), 0),
+      position: safe(() => S.Player.getProgress(), 0),
+      ts: Date.now(),
+      playing: !!safe(() => S.Player.isPlaying(), false),
+      shuffle: !!safe(() => S.Player.getShuffle(), false),
+      repeatMode: safe(() => S.Player.getRepeat(), 0) || 0,
+      liked: !!safe(() => S.Player.getHeart(), false),
+      volume: safe(() => S.Player.getVolume(), 1),
+      device: safe(() => S.Platform.ConnectAPI?.state?.activeDevice?.name, "") || "",
+      next: nt?.title
+        ? { title: nt.title, artist: nt.artist_name || "", art: img(nt.image_url || nt.image_large_url || nt.image_small_url) || null }
+        : null,
+      lyrics: lyricsFor === item.uri ? lyrics : null,
+    };
+  }
+
+  let pushTimer = null;
+  function pushState() {
+    // coalesce bursts of events into one message
+    if (pushTimer) return;
+    pushTimer = setTimeout(() => {
+      pushTimer = null;
+      if (!ws || ws.readyState !== 1) return;
+      const s = snapshot();
+      if (s) ws.send(JSON.stringify(s));
+    }, 60);
+  }
+
+  function runCommand(c) {
+    switch (c.cmd) {
+      case "toggle": S.Player.togglePlay(); break;
+      case "next": S.Player.next(); break;
+      case "prev": S.Player.back(); break;
+      case "seek": S.Player.seek(Math.floor(c.ms)); break;
+      case "shuffle": S.Player.toggleShuffle(); break;
+      case "repeat": S.Player.toggleRepeat(); break;
+      case "like": S.Player.toggleHeart(); break;
+      case "volume": S.Player.setVolume(Math.max(0, Math.min(1, +c.v))); break;
+      case "open":
+        if (c.uri === "queue") S.Platform.History.push("/queue");
+        else go(c.uri);
+        break;
+    }
+    setTimeout(pushState, 250);
+  }
+
+  function setBridged(on) {
+    bridged = on;
+    root.classList.toggle("np-bridged", on);
+  }
+
+  function connectBridge() {
+    try {
+      ws = new WebSocket(BRIDGE_URL);
+    } catch (_) {
+      return setTimeout(connectBridge, 5000);
+    }
+    ws.onopen = () => {
+      setBridged(true);
+      pushState();
+    };
+    ws.onmessage = (e) => {
+      try {
+        runCommand(JSON.parse(e.data));
+      } catch (_) {}
+    };
+    ws.onclose = () => {
+      setBridged(false);
+      ws = null;
+      setTimeout(connectBridge, 4000);
+    };
+    ws.onerror = () => {};
+  }
+  style.textContent += `#np-root.np-bridged{display:none!important}`;
+
+  S.Player.addEventListener("songchange", () => {
+    fetchLyrics(S.Player.data?.item?.uri);
+    pushState();
+    setTimeout(pushState, 900);
+  });
+  S.Player.addEventListener("onplaypause", pushState);
+  // Resync every few seconds (catches seeks, likes, volume and queue changes made elsewhere).
+  setInterval(pushState, 3000);
+  connectBridge();
+  fetchLyrics(S.Player.data?.item?.uri);
 
   applySettings();
   renderTrack();

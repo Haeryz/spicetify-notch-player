@@ -1,9 +1,21 @@
 {
   "name": "Notch Player",
-  "description": "A Dynamic-Island style notch player for Spotify: album-tinted glow, seek bar, like, shuffle, repeat, volume, up next, active device and a live visualizer.",
+  "description": "Turns your MacBook's physical notch into a Dynamic-Island music player: live synced lyrics, album-tinted glow, seek, like, shuffle, repeat, volume, up next and device. Needs the free companion app (see README); without it, a pill appears inside the Spotify window.",
   "preview": "preview.png",
   "main": "notchPlayer.js",
   "readme": "README.md",
-  "authors": [{ "name": "Haeryz", "url": "https://github.com/Haeryz" }],
-  "tags": ["player", "notch", "macos", "dynamic island", "now playing"]
+  "authors": [
+    {
+      "name": "Haeryz",
+      "url": "https://github.com/Haeryz"
+    }
+  ],
+  "tags": [
+    "player",
+    "notch",
+    "macos",
+    "dynamic island",
+    "lyrics",
+    "now playing"
+  ]
 }

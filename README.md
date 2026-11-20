@@ -1,45 +1,52 @@
 # Notch Player
 
-A Spicetify extension that turns the basic macOS "Now Playing" widget into a **Dynamic-Island style notch player** at the top of the Spotify window.
+Turns your MacBook's **physical notch** into a Dynamic-Island style Spotify player. It sits flush with the notch, appears above every app, and is fast because it's native SwiftUI.
 
-![preview](preview.png)
+![expanded](preview.png)
+
+**Collapsed:** the album art and a live visualizer sit on either side of the notch.
+
+![collapsed](preview-collapsed.png)
 
 ## Features
 
-The compact pill shows artwork, a scrolling title and a live visualizer. Hover it to expand:
+Hover the notch to expand it:
 
-- Large album art, plus title, artist and album. Click any of them to open that page.
-- Seek bar you can drag to scrub, with elapsed and total time
-- Like (save to Liked Songs), shuffle, previous, play/pause, next and repeat (off, all, one)
-- Volume slider and mute button. Scroll on the island to change volume.
-- **Up next**: the next track in your queue. Click it to open the queue.
-- **Playing on**: the active Spotify Connect device
-- Accent colour and glow taken from the current album art
-- Expands briefly when the song changes
-- Double-click the compact pill to play or pause
+- **Live synced lyrics.** The current line scrolls in as the song plays.
+- Album art, title, artist and album. Click any of them to open that page in Spotify.
+- Accent colour and glow taken from the album art
+- Seek bar you can drag to scrub, with elapsed and remaining time
+- Like, shuffle, previous, play/pause, next and repeat (off, all, one)
+- Volume slider
+- **Up next** from your queue, and the **active Spotify Connect device**
+- Expands for a few seconds when the song changes
 
-## Settings
+## How it works
 
-Open the profile menu (top right), choose **Notch Player**, and set:
+There are two parts:
 
-- Show or hide the player (shortcut: <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>N</kbd>)
-- Position: center, left or right
-- Expand on song change
-- Visualizer bars
-- Up next
-- Album-art tint
-- Hide Spotify's own bottom player bar
+1. **Spicetify extension** (`notchPlayer.js`, from the Marketplace). It runs inside Spotify, reads the full player state, queue and lyrics, and carries out the controls.
+2. **Notch Player.app** (native macOS app, `app/`). It draws the island in the physical notch, above every app, and talks to the extension over `ws://127.0.0.1:47823`. It only accepts connections from your own Mac.
+
+If the app isn't running, the extension falls back to a pill inside the Spotify window. You can configure it from the profile menu → **Notch Player**.
 
 ## Install
 
-**Marketplace:** search for "Notch Player".
+1. Install **Notch Player** from the Spicetify Marketplace, or add it manually:
+   ```sh
+   cp notchPlayer.js ~/.config/spicetify/Extensions/
+   spicetify config extensions notchPlayer.js && spicetify apply
+   ```
+2. Download `Notch-Player.zip` from [Releases](../../releases/latest), unzip it, and move **Notch Player.app** to `/Applications`.
+   The app isn't notarized, so the first time you open it, right-click it and choose **Open**.
+3. To keep the notch always available, click the ♪ menu-bar icon and choose **Launch at Login**.
 
-**Manual:**
+### Build the app yourself
+
+You need the Xcode Command Line Tools and macOS 13 or later.
 
 ```sh
-cp notchPlayer.js "$(spicetify -c | xargs dirname)/Extensions/"
-spicetify config extensions notchPlayer.js
-spicetify apply
+app/build.sh   # → app/build/Notch Player.app (universal)
 ```
 
 ## License
